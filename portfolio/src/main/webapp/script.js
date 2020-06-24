@@ -31,13 +31,13 @@ function addRandomGreeting() {
   greetingContainer.innerText = greeting;
 }
 
-function toggle (section) {
-  const container = document.getElementById(section);
-  const other = document.getElementById(section === 'swimming' ? 'rowing': 'swimming');
-  if (container.classList.contains('invisible')) {
-    container.classList.remove('invisible')
-    other.classList.add('invisible');
-  } else {
-    container.classList.add('invisible')
+function toggleVisibility (sectionToToggle) {
+  const toggleDiv = document.getElementById(sectionToToggle);
+  const otherDiv = document.getElementById(sectionToToggle === 'swimming' ? 'rowing': 'swimming');
+  if (toggleDiv.classList.contains('invisible')) { //toggleDiv becomes visible, all others become invisible
+    toggleDiv.classList.remove('invisible')
+    otherDiv.classList.add('invisible');
+  } else { //toggleDiv becomes invisible
+    toggleDiv.classList.add('invisible')
   }
 }
