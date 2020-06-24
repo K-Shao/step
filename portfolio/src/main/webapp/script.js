@@ -35,10 +35,12 @@ function toggleVisibility (sectionToToggle) {
   const invisibleClass = 'invisible';
   const toggleDiv = document.getElementById(sectionToToggle);
   const otherDiv = document.getElementById(sectionToToggle === 'swimming' ? 'rowing': 'swimming');
-  if (toggleDiv.classList.contains(invisibleClass)) { //toggleDiv becomes visible, all others become invisible
+  if (toggleDiv.classList.contains(invisibleClass)) { 
+    //if toggleDiv is invisible, toggleDiv becomes visible, all others become invisible
     toggleDiv.classList.remove(invisibleClass)
     otherDiv.classList.add(invisibleClass);
-  } else { //toggleDiv becomes invisible
+  } else { 
+    //if toggleDiv is visible, toggleDiv becomes invisible
     toggleDiv.classList.add(invisibleClass)
   }
 }
