@@ -17,7 +17,11 @@
  */
 function addRandomGreeting() {
   const greetings =
-      ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!'];
+      ["Custard, good. Jam, good. Meat, good.", 
+        "Joey doesn't share food!", 
+        "I don't like it when people take food off of my plate, okay?", 
+        "The fridge broke so I had to eat everything", 
+        "That's a great story. Can I eat it?"];
 
   // Pick a random greeting.
   const greeting = greetings[Math.floor(Math.random() * greetings.length)];
@@ -25,4 +29,15 @@ function addRandomGreeting() {
   // Add it to the page.
   const greetingContainer = document.getElementById('greeting-container');
   greetingContainer.innerText = greeting;
+}
+
+function toggle (section) {
+  const container = document.getElementById(section);
+  const other = document.getElementById(section === 'swimming' ? 'rowing': 'swimming');
+  if (container.classList.contains('invisible')) {
+    container.classList.remove('invisible')
+    other.classList.add('invisible');
+  } else {
+    container.classList.add('invisible')
+  }
 }
