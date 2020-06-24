@@ -17,11 +17,11 @@
  */
 function addRandomGreeting() {
   const greetings =
-      ["Custard, good. Jam, good. Meat, good.", 
-        "Joey doesn't share food!", 
-        "I don't like it when people take food off of my plate, okay?", 
-        "The fridge broke so I had to eat everything", 
-        "That's a great story. Can I eat it?"];
+      ['Custard, good. Jam, good. Meat, good.', 
+        'Joey doesn\'t share food!', 
+        'I don\'t like it when people take food off of my plate, okay?', 
+        'The fridge broke so I had to eat everything', 
+        'That\'s a great story. Can I eat it?'];
 
   // Pick a random greeting.
   const greeting = greetings[Math.floor(Math.random() * greetings.length)];
