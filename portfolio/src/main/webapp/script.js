@@ -17,7 +17,11 @@
  */
 function addRandomGreeting() {
   const greetings =
-      ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!'];
+      ['Custard, good. Jam, good. Meat, good.', 
+        'Joey doesn\'t share food!', 
+        'I don\'t like it when people take food off of my plate, okay?', 
+        'The fridge broke so I had to eat everything', 
+        'That\'s a great story. Can I eat it?'];
 
   // Pick a random greeting.
   const greeting = greetings[Math.floor(Math.random() * greetings.length)];
@@ -25,4 +29,18 @@ function addRandomGreeting() {
   // Add it to the page.
   const greetingContainer = document.getElementById('greeting-container');
   greetingContainer.innerText = greeting;
+}
+
+function toggleVisibility (sectionToToggle) {
+  const invisibleClass = 'invisible';
+  const toggleDiv = document.getElementById(sectionToToggle);
+  const otherDiv = document.getElementById(sectionToToggle === 'swimming' ? 'rowing': 'swimming');
+  if (toggleDiv.classList.contains(invisibleClass)) { 
+    //if toggleDiv is invisible, toggleDiv becomes visible, all others become invisible
+    toggleDiv.classList.remove(invisibleClass)
+    otherDiv.classList.add(invisibleClass);
+  } else { 
+    //if toggleDiv is visible, toggleDiv becomes invisible
+    toggleDiv.classList.add(invisibleClass)
+  }
 }
