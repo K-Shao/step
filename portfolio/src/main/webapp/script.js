@@ -44,3 +44,9 @@ function toggleVisibility (sectionToToggle) {
     toggleDiv.classList.add(invisibleClass)
   }
 }
+
+async function fetchGreeting() {
+  const response = await fetch('/data');
+  const greeting = await response.text();
+  document.getElementById('fetched-greeting').innerHTML = greeting;
+}
