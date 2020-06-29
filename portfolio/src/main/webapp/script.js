@@ -45,10 +45,15 @@ function toggleVisibility (sectionToToggle) {
   }
 }
 
-async function fetchGreeting() {
+async function fetchComments() {
   const response = await fetch('/data');
-  const greetings = await response.json();
-  console.log(greetings);
-  const greetingNumber = Math.floor(Math.random() * 3);
-  document.getElementById('fetched-greeting').innerHTML = greetings[greetingNumber];
+  const comments = await response.json();
+  console.log(comments);
+  const commentsSection = document.getElementById('comments');
+  commentsSection.innerHTML = '';
+  for (var i = 0; i < comments.length; i++) {
+    commentsSection.innerHTML += "<p>";
+    commentsSection.innerHTML += comments[i];
+    commentsSection.innerHTML += "</p>";
+  }
 }
