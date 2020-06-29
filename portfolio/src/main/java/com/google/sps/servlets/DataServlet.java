@@ -28,6 +28,15 @@ import com.google.gson.Gson;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
+  private List<String> comments = new ArrayList<String>();
+
+  @Override
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    String content = request.getParameter("content");
+    comments.add(content);
+    response.sendRedirect("/index.html")
+  }
+
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     List<String> messages = new ArrayList<String>();
