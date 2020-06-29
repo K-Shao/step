@@ -47,6 +47,8 @@ function toggleVisibility (sectionToToggle) {
 
 async function fetchGreeting() {
   const response = await fetch('/data');
-  const greeting = await response.text();
-  document.getElementById('fetched-greeting').innerHTML = greeting;
+  const greetings = await response.json();
+  console.log(greetings);
+  const greetingNumber = Math.floor(Math.random() * 3);
+  document.getElementById('fetched-greeting').innerHTML = greetings[greetingNumber];
 }
