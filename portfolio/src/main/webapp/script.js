@@ -48,7 +48,6 @@ function toggleVisibility (sectionToToggle) {
 async function fetchComments() {
   const response = await fetch('/data');
   const comments = await response.json();
-  console.log(comments);
   const commentsSection = document.getElementById('comments');
   commentsSection.innerHTML = '';
   for (var i = 0; i < comments.length; i++) {
