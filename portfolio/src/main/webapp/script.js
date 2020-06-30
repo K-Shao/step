@@ -45,8 +45,14 @@ function toggleVisibility (sectionToToggle) {
   }
 }
 
-async function fetchGreeting() {
+async function fetchComments() {
   const response = await fetch('/data');
-  const greeting = await response.text();
-  document.getElementById('fetched-greeting').innerHTML = greeting;
+  const comments = await response.json();
+  const commentsSection = document.getElementById('comments');
+  commentsSection.innerHTML = '';
+  for (const comment in comments) {
+    commentsSection.innerHTML += '<p>';
+    commentsSection.innerHTML += comment;
+    commentsSection.innerHTML += '</p>';
+  }
 }
