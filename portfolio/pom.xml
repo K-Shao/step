@@ -34,9 +34,9 @@
       <version>1.9.59</version>
     </dependency>
     <dependency>
-      <groupId>com.google</groupId>
-      <artifactId>com.google.collect</artifactId>
-      <version>0.8.0.v201008251220</version>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+      <version>11.0.2</version>
     </dependency>
 
   </dependencies>
