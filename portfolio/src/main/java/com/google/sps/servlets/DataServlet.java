@@ -29,8 +29,14 @@ import com.google.gson.Gson;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Streams;
 
-/** Servlet that returns some example content. TODO: modify this file to handle comments data */
+import static com.google.common.collect.ImmutableList.toImmutableList;
+
+
+
+/** Servlet that returns some example content.*/
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
@@ -53,10 +59,9 @@ public class DataServlet extends HttpServlet {
     Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
-    List<String> comments = new ArrayList<String>();
-    for (Entity entity : results.asIterable()) {
-      comments.add((String) entity.getProperty("content"));
-    }
+    ImmutableList<String> comments = Streams.stream(results.asIterable())
+                            .map(entity -> entity.getProperty("content").toString())
+                            .collect(toImmutableList());
 
     String json = new Gson().toJson(comments);
     response.setContentType("application/json;");
