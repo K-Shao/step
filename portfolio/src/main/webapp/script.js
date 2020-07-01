@@ -50,7 +50,6 @@ async function fetchComments() {
   const comments = await response.json();
   const commentsSection = document.getElementById('comments');
   commentsSection.innerHTML = '';
-  console.log(comments);
   for (const comment in comments) {
     commentsSection.innerHTML += '<p>';
     commentsSection.innerHTML += comments[comment];
