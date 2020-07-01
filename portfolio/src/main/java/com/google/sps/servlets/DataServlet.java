@@ -14,9 +14,9 @@
 
 package com.google.sps.servlets;
 
+import static com.google.common.collect.ImmutableList.toImmutableList;
+
 import java.io.IOException;
-import java.util.List;
-import java.util.ArrayList;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -31,9 +31,6 @@ import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Streams;
-
-import static com.google.common.collect.ImmutableList.toImmutableList;
-
 
 
 /** Servlet that returns some example content.*/
@@ -59,7 +56,8 @@ public class DataServlet extends HttpServlet {
     Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
-    ImmutableList<String> comments = Streams.stream(results.asIterable())
+    ImmutableList<String> comments = 
+                            Streams.stream(results.asIterable())
                             .map(entity -> entity.getProperty("content").toString())
                             .collect(toImmutableList());
 
