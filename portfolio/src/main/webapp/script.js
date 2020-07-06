@@ -45,6 +45,11 @@ function toggleVisibility (sectionToToggle) {
   }
 }
 
+async function deleteAllComments() {
+    await fetch('/delete-comment', {method: 'POST'});
+    fetchComments();
+}
+
 async function fetchComments() {
   const defaultLimit = '20';
   var numLimit = document.getElementById('limit-comments').value;
