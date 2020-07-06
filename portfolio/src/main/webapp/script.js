@@ -46,7 +46,14 @@ function toggleVisibility (sectionToToggle) {
 }
 
 async function fetchComments() {
-  const response = await fetch('/data');
+  const defaultLimit = '20';
+  var numLimit = document.getElementById('limit-comments').value;
+  if (numLimit === '') {
+      numLimit = defaultLimit;
+  } 
+  const query = '/data?limit=' + numLimit;
+
+  const response = await fetch(query);
   const comments = await response.json();
   const commentsSection = document.getElementById('comments');
   commentsSection.innerHTML = '';

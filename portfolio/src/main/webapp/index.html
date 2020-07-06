@@ -19,6 +19,8 @@
       <p>Click here to fetch all comments from servlet:</p>
       <button onclick="fetchComments()">Greeting</button>
       <div id="comments"></div>
+      <p>Input here to select number of comments returned:</p>
+      <input id="limit-comments" type="text" onchange="fetchComments()"></input>
 
       <form action="/data" method="POST">
         <p>Comment</p>
