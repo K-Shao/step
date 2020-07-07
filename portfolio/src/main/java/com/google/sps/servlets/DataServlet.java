@@ -58,10 +58,10 @@ public class DataServlet extends HttpServlet {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
     ImmutableList<String> comments = 
-                            Streams.stream(results.asIterable())
-                            .limit(limit)
-                            .map(entity -> entity.getProperty("content").toString())
-                            .collect(toImmutableList());
+        Streams.stream(results.asIterable())
+        .limit(limit)
+        .map(entity -> entity.getProperty("content").toString())
+        .collect(toImmutableList());
 
     String json = new Gson().toJson(comments);
     response.setContentType("application/json;");
