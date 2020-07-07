@@ -53,13 +53,15 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    int limit = Integer.parseInt(request.getParameter("limit"));
     Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
     ImmutableList<String> comments = 
-                            Streams.stream(results.asIterable())
-                            .map(entity -> entity.getProperty("content").toString())
-                            .collect(toImmutableList());
+        Streams.stream(results.asIterable())
+        .limit(limit)
+        .map(entity -> entity.getProperty("content").toString())
+        .collect(toImmutableList());
 
     String json = new Gson().toJson(comments);
     response.setContentType("application/json;");
