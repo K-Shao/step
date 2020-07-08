@@ -67,10 +67,10 @@ public class DataServlet extends HttpServlet {
     Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
-    ImmutableList<String> comments = 
+    ImmutableList<Comment> comments = 
         Streams.stream(results.asIterable())
         .limit(limit)
-        .map(entity -> entity.getProperty("content").toString())
+        .map(entity -> new Comment(entity))
         .collect(toImmutableList());
 
     String json = new Gson().toJson(comments);
