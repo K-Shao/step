@@ -63,7 +63,9 @@ async function fetchComments() {
   const commentsSection = document.getElementById('comments');
   commentsSection.innerHTML = '';
   for (const comment in comments) {
-    const commentHTML = '<p>' + comments[comment] + '</p>';
+    const emailHTML = '<h2>' + comments[comment].email + '</h2>';
+    const commentHTML = '<p>' + comments[comment].content + '</p>';
+    commentsSection.innerHTML += emailHTML;
     commentsSection.innerHTML += commentHTML;
   }
 }
