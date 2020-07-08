@@ -63,7 +63,29 @@ async function fetchComments() {
   const commentsSection = document.getElementById('comments');
   commentsSection.innerHTML = '';
   for (const comment in comments) {
-    const commentHTML = '<p>' + comments[comment] + '</p>';
+    const emailHTML = '<h2>' + comments[comment].email + '</h2>';
+    const commentHTML = '<p>' + comments[comment].content + '</p>';
+    commentsSection.innerHTML += emailHTML;
     commentsSection.innerHTML += commentHTML;
   }
+}
+
+async function displayCommentsForm () {
+  const section = document.getElementById('comments-form');
+  const loginLink = document.getElementById('login-link');
+  const invisibleClass = 'invisible';
+  const query = '/user';
+  const response = await fetch(query);
+  const userEmail = await response.text();
+  if (userEmail === '') {
+    section.classList.add(invisibleClass);
+    loginLink.classList.remove(invisibleClass);
+  } else {
+    section.classList.remove(invisibleClass);
+    loginLink.classList.add(invisibleClass);
+  }
+}
+
+function main () {
+  displayCommentsForm();
 }

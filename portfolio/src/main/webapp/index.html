@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
   </head>
-  <body>
+  <body onload="main();">
     <div>
       <script src="nav.js"></script>
     </div>
@@ -22,7 +22,8 @@
       <p>Input here to select number of comments returned:</p>
       <input id="limit-comments" type="text" onchange="fetchComments()"></input>
 
-      <form action="/data" method="POST">
+      <a href="/login" id="login-link">Login</a>
+      <form action="/data" method="POST" id = "comments-form">
         <p>Comment</p>
         <input type="text" name="comment-content">
         <input type="submit">

@@ -25,12 +25,14 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
-import com.google.gson.Gson;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Streams;
+import com.google.gson.Gson;
 
 
 /** Servlet that returns some example content.*/
@@ -41,9 +43,17 @@ public class DataServlet extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String content = request.getParameter("comment-content");
 
+    UserService userService = UserServiceFactory.getUserService();
+    if (!userService.isUserLoggedIn()) {
+      response.sendRedirect("/index.html");
+      return;
+    }
+    String email = userService.getCurrentUser().getEmail();
+
     Entity commentEntity = new Entity("Comment");
     commentEntity.setProperty("content", content);
     commentEntity.setProperty("timestamp", System.currentTimeMillis());
+    commentEntity.setProperty("email", email);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(commentEntity);
@@ -57,10 +67,10 @@ public class DataServlet extends HttpServlet {
     Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
-    ImmutableList<String> comments = 
+    ImmutableList<Comment> comments = 
         Streams.stream(results.asIterable())
         .limit(limit)
-        .map(entity -> entity.getProperty("content").toString())
+        .map(entity -> new Comment(entity))
         .collect(toImmutableList());
 
     String json = new Gson().toJson(comments);
