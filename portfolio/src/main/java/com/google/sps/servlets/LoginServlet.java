@@ -23,7 +23,5 @@ public class LoginServlet extends HttpServlet {
       String loginURL = userService.createLoginURL("/index.html");
       response.sendRedirect(loginURL);
     }
-
   }
-
 }

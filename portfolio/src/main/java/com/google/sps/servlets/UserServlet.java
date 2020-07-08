@@ -21,7 +21,5 @@ public class UserServlet extends HttpServlet {
       String userEmail = userService.getCurrentUser().getEmail();
       response.getWriter().println(userEmail);
     } 
-
   }
-
 }
