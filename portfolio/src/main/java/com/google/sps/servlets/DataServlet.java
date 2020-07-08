@@ -31,6 +31,8 @@ import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Streams;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 
 
 /** Servlet that returns some example content.*/
@@ -41,9 +43,17 @@ public class DataServlet extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String content = request.getParameter("comment-content");
 
+    UserService userService = UserServiceFactory.getUserService();
+    if (!userService.isUserLoggedIn()) {
+      response.sendRedirect("/index.html");
+      return;
+    }
+    String email = userService.getCurrentUser().getEmail();
+
     Entity commentEntity = new Entity("Comment");
     commentEntity.setProperty("content", content);
     commentEntity.setProperty("timestamp", System.currentTimeMillis());
+    commentEntity.setProperty("email", email);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(commentEntity);
