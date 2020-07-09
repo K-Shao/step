@@ -30,6 +30,9 @@ import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
+import com.google.cloud.language.v1.Document;
+import com.google.cloud.language.v1.LanguageServiceClient;
+import com.google.cloud.language.v1.Sentiment;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Streams;
 import com.google.gson.Gson;
@@ -50,10 +53,17 @@ public class DataServlet extends HttpServlet {
     }
     String email = userService.getCurrentUser().getEmail();
 
+    Document doc = Document.newBuilder().setContent(content).setType(Document.Type.PLAIN_TEXT).build();
+    LanguageServiceClient languageService = LanguageServiceClient.create();
+    Sentiment sentiment = languageService.analyzeSentiment(doc).getDocumentSentiment();
+    float sentimentScore = sentiment.getScore();
+    languageService.close();
+
     Entity commentEntity = new Entity("Comment");
     commentEntity.setProperty("content", content);
     commentEntity.setProperty("timestamp", System.currentTimeMillis());
     commentEntity.setProperty("email", email);
+    commentEntity.setProperty("sentiment", sentimentScore);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(commentEntity);
