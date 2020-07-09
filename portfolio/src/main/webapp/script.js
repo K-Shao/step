@@ -65,8 +65,10 @@ async function fetchComments() {
   for (const comment in comments) {
     const emailHTML = '<h2>' + comments[comment].email + '</h2>';
     const commentHTML = '<p>' + comments[comment].content + '</p>';
+    const sentimentHTML = '<p>' + comments[comment].score + '</p>';
     commentsSection.innerHTML += emailHTML;
     commentsSection.innerHTML += commentHTML;
+    commentsSection.innerHTML += sentimentHTML;
   }
 }
 
