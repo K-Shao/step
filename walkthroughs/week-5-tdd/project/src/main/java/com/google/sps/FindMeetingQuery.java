@@ -51,6 +51,22 @@ public final class FindMeetingQuery {
         .sorted(TimeRange.ORDER_BY_START)
         .collect(toImmutableList());
 
-    return getValidRanges(invalidTimesMandatory, request.getDuration());
+    ImmutableList<TimeRange> invalidTimesOptional = 
+        Streams.stream(events)
+        .filter(event -> !Collections.disjoint(event.getAttendees(), request.getAttendees())
+            || !Collections.disjoint(event.getAttendees(), request.getOptionalAttendees()))
+        .map(event -> event.getWhen())
+        .sorted(TimeRange.ORDER_BY_START)
+        .collect(toImmutableList());
+
+    Collection<TimeRange> rangeWithOptional = 
+        getValidRanges(invalidTimesOptional, request.getDuration());
+
+    if (request.getAttendees().isEmpty()) {
+      return rangeWithOptional;
+    }
+    return rangeWithOptional.isEmpty() ? 
+        getValidRanges(invalidTimesMandatory, request.getDuration()) : rangeWithOptional;
+
   }
 }
