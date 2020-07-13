@@ -44,7 +44,6 @@ public final class FindMeetingQuery {
   }
 
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
-
     ImmutableList<TimeRange> invalidTimesMandatory = 
         Streams.stream(events)
         .filter(event -> !Collections.disjoint(event.getAttendees(), request.getAttendees()))
@@ -53,6 +52,5 @@ public final class FindMeetingQuery {
         .collect(toImmutableList());
 
     return getValidRanges(invalidTimesMandatory, request.getDuration());
-
   }
 }
