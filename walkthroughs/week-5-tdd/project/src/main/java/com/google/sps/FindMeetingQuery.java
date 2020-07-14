@@ -47,7 +47,7 @@ public final class FindMeetingQuery {
     ImmutableList<TimeRange> invalidTimesMandatory = 
         Streams.stream(events)
         .filter(event -> !Collections.disjoint(event.getAttendees(), request.getAttendees()))
-        .map(event -> event.getWhen())
+        .map(Event::getWhen)
         .sorted(TimeRange.ORDER_BY_START)
         .collect(toImmutableList());
 
@@ -55,7 +55,7 @@ public final class FindMeetingQuery {
         Streams.stream(events)
         .filter(event -> !Collections.disjoint(event.getAttendees(), request.getAttendees())
             || !Collections.disjoint(event.getAttendees(), request.getOptionalAttendees()))
-        .map(event -> event.getWhen())
+        .map(Event::getWhen)
         .sorted(TimeRange.ORDER_BY_START)
         .collect(toImmutableList());
 
