@@ -29,7 +29,7 @@ public final class FindMeetingQuery {
   private Collection<TimeRange> getValidRanges(Collection<TimeRange> invalidTimes, long duration) {
     int currentTime = TimeRange.START_OF_DAY;
     List<TimeRange> validRanges = new ArrayList<TimeRange>();
-    for (TimeRange time: invalidTimes) {
+    for (TimeRange time : invalidTimes) {
       if (time.start() >= currentTime + duration) {
         validRanges.add(TimeRange.fromStartEnd(currentTime, time.start(), false));
       }
